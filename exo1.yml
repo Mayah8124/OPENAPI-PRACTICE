@@ -1,0 +1,24 @@
+# écriture d'une spécification OAS3
+
+# Définition:
+# - OpenAPI: c'est un language de spécification open-source pour les API REST
+# - info: c'est l'ensemble des métadonnées de base de l'API
+# - paths: c'est le chemin ou la route
+
+openapi: 3.0.3
+info:
+  title: My openAPI exo1
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+paths:
+  /ping:
+    get:
+      responses:
+        200:
+          description: get pong
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: pong
