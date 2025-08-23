@@ -36,6 +36,10 @@ paths:
                       type: string
                     email:
                       type: string
+                  example:
+                    id: 1
+                    name: Alice
+                    email: alice@example.com
         400:
           description: bad request
           content:
