@@ -20,20 +20,6 @@ paths:
           schema:
             type: integer
           required: true
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: array
-              items:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                  name:
-                    type: string
-                  email:
-                    type: string
       responses:
         200:
           description: list founded
