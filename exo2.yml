@@ -10,12 +10,12 @@ paths:
   /users:
     get:
       parameters:
-        - in: path
+        - in: query
           name: page
           schema:
             type: integer
           required: true
-        - in: path
+        - in: query
           name: size
           schema:
             type: integer
@@ -29,7 +29,7 @@ paths:
                 type: object
                 properties:
                   id:
-                    type: string
+                    type: integer
                   name:
                     type: string
                   email:
