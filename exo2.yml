@@ -43,7 +43,11 @@ paths:
         400:
           description: bad request
           content:
-            text/plain:
+            application/json:
               schema:
-                type: string
-                example: Bad types for provided query parameters
+                type: object
+                properties:
+                  error:
+                    type: string
+                example:
+                  error: "Bad types for provided query parameters"
