@@ -17,14 +17,7 @@ paths:
               schema:
                 type: array
                 items:
-                  type: object
-                  properties:
-                    id:
-                      type: integer
-                    title:
-                      type: string
-                    completed:
-                      type: boolean
+                  $ref: "#/components/schemas/Task"
     post:
       requestBody:
         content:
@@ -32,14 +25,7 @@ paths:
             schema:
               type: array
               items:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                  title:
-                    type: string
-                  completed:
-                    type: boolean
+                $ref: "#/components/schemas/Task"
       responses:
         201:
           description: List of news tasks
@@ -48,21 +34,14 @@ paths:
               schema:
                 type: array
                 items:
-                  type: object
-                  properties:
-                    id:
-                      type: integer
-                    title:
-                      type: string
-                    completed:
-                      type: boolean
+                  $ref: "#/components/schemas/Task"
     delete:
       parameters:
         - name: id
-          in: query
+          in: path
           required: true
           schema:
-            type: integer
+            $ref: "#/components/schemas/TaskId"
       responses:
         200:
           description: task deleted
@@ -71,22 +50,15 @@ paths:
               schema:
                 type: array
                 items:
-                  type: object
-                  properties:
-                    id:
-                      type: integer
-                    title:
-                      type: string
-                    completed:
-                      type: boolean
+                  $ref: "#/components/schemas/Task"
   /tasks/{id}:
     get:
       parameters:
-        - in: query
+        - in: path
           name: id
-          schema:
-            type: integer
           required: true
+          schema:
+            $ref: "#/components/schemas/TaskId"
       responses:
         200:
           description: task found
@@ -95,15 +67,8 @@ paths:
               schema:
                 type: array
                 items:
-                  type: object
-                  properties:
-                    id:
-                      type: integer
-                    title:
-                      type: string
-                    completed:
-                      type: boolean
-        401:
+                  $ref: "#/components/schemas/Task"
+        404:
           description: task not found
           content:
             application/json:
@@ -116,11 +81,11 @@ paths:
                   error: "Task not found"
     delete:
       parameters:
-        - name: id
+        - name: taskId
           in: query
           required: true
           schema:
-            type: integer
+            $ref: "#/components/schemas/TaskId"
       responses:
         200:
           description: task deleted
@@ -128,10 +93,29 @@ paths:
             application/json:
               schema:
                 type: object
-                properties:
-                  id:
-                    type: integer
-                  title:
-                    type: string
-                  completed:
-                    type: boolean
+                items:
+                  $ref: "#/components/schemas/Task"
+
+components:
+  schemas:
+    TaskId:
+      type: integer
+      example: 22
+
+    TaskTitle:
+      type: string
+      example: 'go to grocery'
+
+    IsCompleted:
+      type: boolean
+      example: true
+
+    Task:
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/TaskId"
+        title:
+          $ref: "#/components/schemas/TaskTitle"
+        completed:
+          $ref: "#/components/schemas/IsCompleted"
