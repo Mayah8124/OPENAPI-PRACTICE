@@ -1,0 +1,152 @@
+# API avec une authentification
+
+openapi: 3.0.3
+info:
+  title: My openAPI exo5
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+
+tags:
+  - name: Orders
+    description: pagined list of order
+  - name: Order
+    description: create order
+  - name: Product
+    description: get list of product
+
+paths:
+  /orders:
+    get:
+      parameters:
+        - $ref: "#/components/parameters/pageParam"
+        - $ref: "#/components/parameters/sizeParam"
+      tags:
+        - Orders
+      responses:
+        200:
+          description: ok
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Order"
+
+    post:
+      tags:
+        - Order
+      security:
+        - basicAuth
+      responses:
+        201:
+          description: created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Order"
+              example:
+                  id: 1
+                  customer_name: "mayah"
+                  creation_datetime: "2025-12-31T23:59:59Z"
+                  total_amount: 1234.56
+
+        401:
+          description: unauthorized access
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: You are not authorized
+
+  /products:
+    get:
+      parameters:
+        - $ref: "#/components/parameters/limitParam"
+        - $ref: "#/components/parameters/qParam"
+      tags:
+        - Product
+      responses:
+        200:
+          description: list of product
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Product"
+              examples:
+                withValues:
+                  value:
+                    - name: "chair"
+                      expiration_datetime: "2025-12-31T23:59:59Z"
+                      price: 55.99
+                emptyList:
+                  value: []
+
+
+components:
+  parameters:
+    pageParam:
+      name: page
+      in: query
+      schema:
+        type: integer
+
+    sizeParam:
+      name: size
+      in: query
+      schema:
+        type: integer
+
+    limitParam:
+      description: maximum number of elements
+      name: limit
+      in: query
+      schema:
+        type: integer
+      required: false
+
+    qParam:
+      description: search term
+      name: q
+      in: query
+      schema:
+        type: string
+      required: false
+
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+
+  schemas:
+    Order:
+      type: object
+      properties:
+        id:
+          type: integer
+        customer_name:
+          type: string
+        creation_datetime:
+          type: string
+          format: date-time
+        total_amount:
+          type: number
+          format: float
+
+    Product:
+      type: object
+      properties:
+        name:
+          type: string
+        expiration_datetime:
+          type: string
+          format: date-time
+        price:
+          type: number
+          format: float
+
+
+security:
+  - basicAuth: []
