@@ -47,23 +47,14 @@ components:
       required: false
 
   schemas:
-    ProductName:
-      type: string
-
-    ProductExpiration_datetime:
-      type: string
-      format: date-time
-
-    ProductPrice:
-      type: number
-      format: float
-
     Product:
       type: object
       properties:
         name:
-          $ref: "#/components/schemas/ProductName"
+          type: string
         expiration_datetime:
-          $ref: "#/components/schemas/ProductExpiration_datetime"
+          type: string
+          format: date-time
         price:
-          $ref: "#/components/schemas/ProductPrice"
+          type: number
+          format: float
