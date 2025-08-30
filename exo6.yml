@@ -138,53 +138,49 @@ components:
           $ref: "#/components/schemas/Preferences"
 
     CreateUserProfile:
-      allOf:
-        - $ref: "#/components/schemas/UserProfile"
-        - type: object
-          properties:
-            id:
-              type: integer
+      type: object
+      properties:
+        personalInfo:
+          $ref: "#/components/schemas/PersonalInfo"
+        address:
+          $ref: "#/components/schemas/Address"
+        preferences:
+          $ref: "#/components/schemas/Preferences"
 
     PersonalInfo:
-      allOf:
-        - $ref: "#/components/schemas/UserProfile"
-        - type: object
-          properties:
-            first_name:
-              type: string
-            last_name:
-              type: string
-            birthdate:
-              type: string
-              format: date
-            email:
-              type: string
-              format: email
+      type: object
+      properties:
+        first_name:
+          type: string
+        last_name:
+          type: string
+        birthdate:
+          type: string
+          format: date
+        email:
+          type: string
+          format: email
 
 
     Address:
-      allOf:
-        - $ref: "#/components/schemas/UserProfile"
-        - type: object
-          properties:
-            address_street:
-              type: string
-            address_city:
-              type: string
-            address_country:
-              type: string
-            address_postal_code:
-              type: integer
+      type: object
+      properties:
+        address_street:
+          type: string
+        address_city:
+          type: string
+        address_country:
+          type: string
+        address_postal_code:
+          type: integer
 
     Preferences:
-      allOf:
-        - $ref: "#/components/schemas/UserProfile"
-        - type: object
-          properties:
-            needs_newsletter:
-              type: boolean
-            language:
-              enum:
-                - mg
-                - fr
-                - eng
+      type: object
+      properties:
+        needs_newsletter:
+          type: boolean
+          language:
+            enum:
+              - mg
+              - fr
+              - eng
