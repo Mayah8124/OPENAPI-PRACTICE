@@ -48,7 +48,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
+                type: array
                 items:
                   $ref: "#/components/schemas/UserProfile"
 
@@ -108,7 +108,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/Address"
+              $ref: "#/components/schemas/Preferences"
       responses:
         200:
           description: update preferences
@@ -122,13 +122,15 @@ components:
   schemas:
     UserProfile:
       type: object
-      required:
-        - user_info
       properties:
-        user_info:
-          type: string
-      discriminator:
-        propertyName: user_info
+        id:
+          type: integer
+        personalInfo:
+          $ref: "#/components/schemas/PersonalInfo"
+        address:
+          $ref: "#/components/schemas/Address"
+        preferences:
+          $ref: "#/components/schemas/Preferences"
 
     CreateUserProfile:
       allOf:
@@ -149,6 +151,7 @@ components:
               type: string
             birthdate:
               type: string
+              format: date
             email:
               type: string
               format: email
@@ -166,8 +169,7 @@ components:
             address_country:
               type: string
             address_postal_code:
-              type: string
-              format: int64
+              type: integer
 
     Preferences:
       allOf:
