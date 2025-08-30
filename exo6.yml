@@ -46,7 +46,7 @@ paths:
             schema:
               type: array
               items:
-                $ref: "#/components/schemas/PersonalInfo"
+                $ref: "#/components/schemas/CreateUserProfile"
       responses:
         201:
           description: users created
