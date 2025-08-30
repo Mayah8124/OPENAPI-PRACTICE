@@ -19,12 +19,17 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/PersonalInfo"
+                $ref: "#/components/schemas/UserProfile"
               example:
+                id: 1
                 first_name: Mayah
                 last_name: Alebi
                 birthdate: 22-12-2000
                 email: mayah@gmail.com
+                address_street: Lot 47K Ivato
+                address_city: Mamory Ivato
+                address_country: Madagascar
+                address_postal_code: 111
         404:
           description: user not found
           content:
