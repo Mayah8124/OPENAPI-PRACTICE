@@ -1,0 +1,183 @@
+openapi: 3.0.3
+info:
+  title: My openAPI exo6
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+paths:
+  /users/{id}:
+    get:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: user with all his info
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PersonalInfo"
+              example:
+                first_name: Mayah
+                last_name: Alebi
+                birthdate: 22-12-2000
+                email: mayah@gmail.com
+        404:
+          description: user not found
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: user not found
+
+  /users:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: "#/components/schemas/PersonalInfo"
+      responses:
+        201:
+          description: users created
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: "#/components/schemas/UserProfile"
+
+  /users/{id}/personalInfo:
+    put:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PersonalInfo"
+      responses:
+        200:
+          description: update personal info
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: update successfully
+
+  /users/{id}/address:
+    put:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Address"
+      responses:
+        200:
+          description: update address
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: update successfully
+
+  /users/{id}/preferences:
+    put:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Address"
+      responses:
+        200:
+          description: update preferences
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: update successfully
+
+components:
+  schemas:
+    UserProfile:
+      type: object
+      required:
+        - user_info
+      properties:
+        user_info:
+          type: string
+      discriminator:
+        propertyName: user_info
+
+    CreateUserProfile:
+      allOf:
+        - $ref: "#/components/schemas/UserProfile"
+        - type: object
+          properties:
+            id:
+              type: integer
+
+    PersonalInfo:
+      allOf:
+        - $ref: "#/components/schemas/UserProfile"
+        - type: object
+          properties:
+            first_name:
+              type: string
+            last_name:
+              type: string
+            birthdate:
+              type: string
+            email:
+              type: string
+              format: email
+
+
+    Address:
+      allOf:
+        - $ref: "#/components/schemas/UserProfile"
+        - type: object
+          properties:
+            address_street:
+              type: string
+            address_city:
+              type: string
+            address_country:
+              type: string
+            address_postal_code:
+              type: string
+              format: int64
+
+    Preferences:
+      allOf:
+        - $ref: "#/components/schemas/UserProfile"
+        - type: object
+          properties:
+            needs_newsletter:
+              type: boolean
+            language:
+              enum:
+                - mg
+                - fr
+                - eng
