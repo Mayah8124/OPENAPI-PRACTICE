@@ -22,14 +22,19 @@ paths:
                 $ref: "#/components/schemas/UserProfile"
               example:
                 id: 1
-                first_name: Mayah
-                last_name: Alebi
-                birthdate: 22-12-2000
-                email: mayah@gmail.com
-                address_street: Lot 47K Ivato
-                address_city: Mamory Ivato
-                address_country: Madagascar
-                address_postal_code: 111
+                personalInfo:
+                  first_name: Mayah
+                  last_name: Alebi
+                  birthdate: 2000-12-23
+                  email: mayah@gmail.com
+                address:
+                  address_street: Lot 47K Ivato
+                  address_city: Mamory Ivato
+                  address_country: Madagascar
+                  address_postal_code: 111
+                preferences:
+                  needs_newsletter: true
+                  language: eng
         404:
           description: user not found
           content:
@@ -47,6 +52,20 @@ paths:
               type: array
               items:
                 $ref: "#/components/schemas/CreateUserProfile"
+            example:
+              - personalInfo:
+                  first_name: Alex
+                  last_name: Corin
+                  birthdate: 2009-03-25
+                  email: alexProo@gmail.com
+                address:
+                  address_street: 123 Rue du Faubourg Saint-Honoré
+                  address_city: Paris
+                  address_country: France
+                  address_postal_code: 77123
+                preferences:
+                  needs_newsletter: true
+                  language: fr
       responses:
         201:
           description: users created
@@ -56,6 +75,21 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/UserProfile"
+              example:
+                - id: 5
+                  personalInfo:
+                    first_name: Alex
+                    last_name: Corin
+                    birthdate: 2006-12-15
+                    email: alexProo@gmail.com
+                  address:
+                    address_street: 123 Rue du Faubourg Saint-Honoré
+                    address_city: Paris
+                    address_country: France
+                    address_postal_code: 77123
+                  preferences:
+                    needs_newsletter: true
+                    language: fr
 
   /users/{id}/personalInfo:
     put:
@@ -70,6 +104,11 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/PersonalInfo"
+            example:
+              first_name: Alex
+              last_name: Corine
+              birthdate: 2024-04-15
+              email: alexProo2@gmail.com
       responses:
         200:
           description: update personal info
@@ -92,6 +131,11 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/Address"
+            example:
+              address_street: 123 Rue du Faubourg Saint-Antoine
+              address_city: Genève
+              address_country: Suisse
+              address_postal_code: 77000
       responses:
         200:
           description: update address
@@ -114,6 +158,9 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/Preferences"
+            example:
+              needs_newsletter: false
+              language: eng
       responses:
         200:
           description: update preferences
@@ -172,15 +219,16 @@ components:
         address_country:
           type: string
         address_postal_code:
-          type: integer
+          type: string
 
     Preferences:
       type: object
       properties:
         needs_newsletter:
           type: boolean
-          language:
-            enum:
-              - mg
-              - fr
-              - eng
+        language:
+          type: string
+          enum:
+            - mg
+            - fr
+            - eng
